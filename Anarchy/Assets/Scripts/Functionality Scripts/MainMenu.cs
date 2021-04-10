@@ -104,6 +104,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
         waitingStatusText.text = "Enough Players";
         Debug.Log("Game is Ready To Begin");
 
-        PhotonNetwork.LoadLevel("CharacterController");
+        PhotonNetwork.LoadLevel("MainGame");
     }
 }

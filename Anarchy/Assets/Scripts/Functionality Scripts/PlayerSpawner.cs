@@ -15,24 +15,10 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField]
     private GameObject spawnpoints;
 
-    private Player[] allPlayers;
-    private int myNumberInRoom;
-
     // Start is called before the first frame update
     void Start()
     {
-        allPlayers = PhotonNetwork.PlayerList;
-        foreach(Player p in allPlayers)
-        {
-            if (p != PhotonNetwork.LocalPlayer)
-            {
-                myNumberInRoom++;
-            }
-        }
-
-        Debug.Log(myNumberInRoom);
-
-        player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnpointController.singletonInstance.spawnpoints[myNumberInRoom].position, Quaternion.identity);
+        player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnpointController.singletonInstance.spawnpoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
         cameraTransform = Camera.main.GetComponent<Transform>();
         offset = cameraTransform.position;
     }
