@@ -7,7 +7,6 @@ ScriptsOnlyBuild:
     - PlayerSpawner
     - SpawnpointController
     - Timer
-    - WatchPlayer
     PhotonUnityNetworking.Editor.dll:
     - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
@@ -74,8 +73,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
-    - Class: 81
-      Script: {instanceID: 0}
     - Class: 89
       Script: {instanceID: 0}
     - Class: 104
@@ -83,27 +80,25 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1722}
+      Script: {instanceID: 1724}
     - Class: 114
-      Script: {instanceID: 1808}
+      Script: {instanceID: 1810}
     - Class: 114
-      Script: {instanceID: 2158}
+      Script: {instanceID: 2160}
     - Class: 114
-      Script: {instanceID: 2402}
-    - Class: 114
-      Script: {instanceID: 2442}
+      Script: {instanceID: 2404}
     - Class: 114
       Script: {instanceID: 2444}
     - Class: 114
-      Script: {instanceID: 2622}
+      Script: {instanceID: 2446}
     - Class: 114
-      Script: {instanceID: 2740}
+      Script: {instanceID: 2624}
     - Class: 114
-      Script: {instanceID: 2916}
+      Script: {instanceID: 2742}
     - Class: 114
-      Script: {instanceID: 3464}
+      Script: {instanceID: 2918}
     - Class: 114
-      Script: {instanceID: 4294}
+      Script: {instanceID: 4296}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -154,45 +149,45 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1510}
+      Script: {instanceID: 1512}
     - Class: 114
-      Script: {instanceID: 1554}
+      Script: {instanceID: 1556}
     - Class: 114
-      Script: {instanceID: 1592}
+      Script: {instanceID: 1594}
     - Class: 114
-      Script: {instanceID: 1682}
+      Script: {instanceID: 1684}
     - Class: 114
-      Script: {instanceID: 1722}
+      Script: {instanceID: 1724}
     - Class: 114
-      Script: {instanceID: 1808}
+      Script: {instanceID: 1810}
     - Class: 114
-      Script: {instanceID: 2086}
+      Script: {instanceID: 2088}
     - Class: 114
-      Script: {instanceID: 2442}
+      Script: {instanceID: 2444}
     - Class: 114
-      Script: {instanceID: 2572}
+      Script: {instanceID: 2574}
     - Class: 114
-      Script: {instanceID: 2622}
+      Script: {instanceID: 2624}
     - Class: 114
-      Script: {instanceID: 2634}
+      Script: {instanceID: 2636}
     - Class: 114
-      Script: {instanceID: 2740}
+      Script: {instanceID: 2742}
     - Class: 114
-      Script: {instanceID: 2912}
+      Script: {instanceID: 2914}
     - Class: 114
-      Script: {instanceID: 2916}
+      Script: {instanceID: 2918}
     - Class: 114
-      Script: {instanceID: 4000}
+      Script: {instanceID: 4002}
     - Class: 114
-      Script: {instanceID: 4016}
-    - Class: 114
-      Script: {instanceID: 4294}
+      Script: {instanceID: 4018}
     - Class: 114
       Script: {instanceID: 4296}
     - Class: 114
-      Script: {instanceID: 4446}
+      Script: {instanceID: 4298}
     - Class: 114
-      Script: {instanceID: 4694}
+      Script: {instanceID: 4448}
+    - Class: 114
+      Script: {instanceID: 4696}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -436,7 +431,7 @@ ScriptsOnlyBuild:
     className: PlaymodeTestsController
   - hash:
       serializedVersion: 2
-      Hash: 9d81eccd2e23c046bef3bab0297f4895
+      Hash: d953b54a0b9b85764c2b8d4f8c1e76cb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerSpawner

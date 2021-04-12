@@ -771,14 +771,6 @@
       <Project>{D7B1A7B4-A46C-D0E6-D031-12BF078902C4}</Project>
       <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="PhotonRealtime.csproj">
-      <Project>{B0D39D78-42B6-E2D1-D9B3-46F767254A5F}</Project>
-      <Name>PhotonRealtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
-      <Project>{D881F238-FAE0-4045-4A5A-D17EEC039ADC}</Project>
-      <Name>PhotonUnityNetworking.Utilities</Name>
-    </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.csproj">
       <Project>{4FBA3708-88AA-5CCE-B902-B9D575DFAFF9}</Project>
       <Name>PhotonUnityNetworking</Name>
@@ -786,6 +778,14 @@
     <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
       <Project>{C0CC6C07-59CE-20AF-F7E8-661DC8AB533C}</Project>
       <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonRealtime.csproj">
+      <Project>{B0D39D78-42B6-E2D1-D9B3-46F767254A5F}</Project>
+      <Name>PhotonRealtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
+      <Project>{D881F238-FAE0-4045-4A5A-D17EEC039ADC}</Project>
+      <Name>PhotonUnityNetworking.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,13 +7,13 @@ using Photon.Realtime;
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab = null;
+    [SerializeField] private GameObject spawnpoints;
+    [SerializeField] private GameObject playerCamera = null;
 
     private GameObject player;
     private Vector3 offset;
     private Transform cameraTransform;
 
-    [SerializeField]
-    private GameObject spawnpoints;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,7 @@ public class PlayerSpawner : MonoBehaviour
         cameraTransform = Camera.main.GetComponent<Transform>();
         offset = cameraTransform.position;
     }
-
+    
     void LateUpdate()
     {
         cameraTransform.position = player.transform.position + offset;
