@@ -20,9 +20,12 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     private const string GameVersion = "0.1"; // if we update the game, we want to ensure that players with different game versions cannot play each other
     
-    private const int MaxPlayersPerRoom = 2; // reset to 8 laters
-
-    private void Awake() => PhotonNetwork.AutomaticallySyncScene = true;
+    private const int MaxPlayersPerRoom = 3; // reset to 8 laters
+    /*
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = false;
+    }*/
 
     public void FindOpponent()
     {
@@ -77,6 +80,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
+        Debug.Log(playerCount);
+
         if (playerCount != MaxPlayersPerRoom)
         {
             waitingStatusText.text = "Waiting for more players...";
@@ -86,16 +91,27 @@ public class MainMenu : MonoBehaviourPunCallbacks
         {
             Debug.Log("Match will begin");
             waitingStatusText.text = "Opponent Found!";
-            //LoadGame(); // COMMENT OUT WHEN PLAYING 1 PLAYER
+            //LoadGame(); UNCOMMENT FOR 1 PLAYER MOCK TESTING
         }
-    }
 
+        PhotonNetwork.LoadLevel("Room");
+    }
+    /*
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.Log("New Player Entered");
+
+        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+
         if (PhotonNetwork.CurrentRoom.PlayerCount == MaxPlayersPerRoom)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            LoadGame();
+            PhotonNetwork.AutomaticallySyncScene = true;
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                LoadGame();
+            }
         }
     }
 
@@ -105,5 +121,5 @@ public class MainMenu : MonoBehaviourPunCallbacks
         Debug.Log("Game is Ready To Begin");
 
         PhotonNetwork.LoadLevel("MainGame");
-    }
+    }*/
 }
