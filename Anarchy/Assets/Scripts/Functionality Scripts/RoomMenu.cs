@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class RoomMenu : MonoBehaviourPunCallbacks
 {
@@ -16,8 +17,6 @@ public class RoomMenu : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log(newPlayer.NickName + " Entered");
-
-        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
 
         if (PhotonNetwork.CurrentRoom.PlayerCount == MaxPlayersPerRoom)
         {

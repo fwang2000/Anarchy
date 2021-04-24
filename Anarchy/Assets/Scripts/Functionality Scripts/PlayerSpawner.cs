@@ -17,7 +17,6 @@ public class PlayerSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("spawn");
         player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnpointController.singletonInstance.spawnpoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
         cameraTransform = Camera.main.GetComponent<Transform>();
         offset = cameraTransform.position;

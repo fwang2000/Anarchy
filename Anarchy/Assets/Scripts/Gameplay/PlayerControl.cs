@@ -61,7 +61,7 @@ public class PlayerControl : MonoBehaviourPun
 
         Vector3 heading = Vector3.Normalize(rightMovement + upMovement);
 
-        transform.forward = heading;
+        // transform.forward = heading;
 
         Vector3 movement = rightMovement + upMovement;
 

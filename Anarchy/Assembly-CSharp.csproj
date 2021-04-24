@@ -58,7 +58,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Gameplay\Curse.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\WebSocket.cs" />
+    <Compile Include="Assets\Scripts\Functionality Scripts\RoomMenu.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\Functionality Scripts\LobbyMenu.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\CurseControl.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\PlayerSpawner.cs" />
@@ -67,7 +69,8 @@
     <Compile Include="Assets\Scripts\Functionality Scripts\PlayerNameInput.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\WatchPlayer.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\MainMenu.cs" />
-    <Compile Include="Assets\Scripts\Functionality Scripts\RoomMenu.cs" />
+    <Compile Include="Assets\Scripts\Functionality Scripts\TopPanel.cs" />
+    <Compile Include="Assets\Scripts\Functionality Scripts\RoomListEntry.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -783,6 +786,10 @@
     <ProjectReference Include="PhotonUnityNetworking.csproj">
       <Project>{4FBA3708-88AA-5CCE-B902-B9D575DFAFF9}</Project>
       <Name>PhotonUnityNetworking</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Demos.csproj">
+      <Project>{D2CA3CBD-02B0-465D-F3CE-0530BED28BE7}</Project>
+      <Name>PhotonUnityNetworking.Demos</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
       <Project>{C0CC6C07-59CE-20AF-F7E8-661DC8AB533C}</Project>
