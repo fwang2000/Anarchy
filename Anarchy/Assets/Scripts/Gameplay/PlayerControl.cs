@@ -14,6 +14,22 @@ public class PlayerControl : MonoBehaviourPun
 
     CharacterController controller;
 
+    private Vector3 offset;
+    private Transform cameraTransform;
+
+    [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
+    public static GameObject LocalPlayerInstance;
+
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            PlayerControl.LocalPlayerInstance = this.gameObject;
+        }
+        
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +40,9 @@ public class PlayerControl : MonoBehaviourPun
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
 
         controller = GetComponent<CharacterController>();
+
+        cameraTransform = Camera.main.GetComponent<Transform>();
+        offset = cameraTransform.position;
     }
 
     // Update is called once per frame
@@ -37,6 +56,16 @@ public class PlayerControl : MonoBehaviourPun
             }
 
             ApplyGravity();
+
+            if (cameraTransform != null)
+            {
+                cameraTransform.position = transform.position + offset;
+            }
+            else
+            {
+                cameraTransform = Camera.main.GetComponent<Transform>();
+                offset = cameraTransform.position;
+            }
         }
     }
 

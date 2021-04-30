@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Realtime;
+using Photon;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab = null;
+    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject spawnpoints;
 
     private GameObject player;
@@ -15,7 +15,15 @@ public class PlayerSpawner : MonoBehaviour
 
 
     // Start is called before the first frame update
+    /*
     void Start()
+    {
+        player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnpointController.singletonInstance.spawnpoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
+        cameraTransform = Camera.main.GetComponent<Transform>();
+        offset = cameraTransform.position; 
+    }*/
+
+    public void InstantiatePlayer()
     {
         player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnpointController.singletonInstance.spawnpoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position, Quaternion.identity);
         cameraTransform = Camera.main.GetComponent<Transform>();
@@ -24,6 +32,9 @@ public class PlayerSpawner : MonoBehaviour
     
     void LateUpdate()
     {
-        cameraTransform.position = player.transform.position + offset;
+        if (cameraTransform != null)
+        {
+            cameraTransform.position = player.transform.position + offset;
+        }
     }
 }

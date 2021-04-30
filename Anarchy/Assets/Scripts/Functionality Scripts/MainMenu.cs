@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviourPunCallbacks
 {
+    [Header("Menu Panel")]
+    public GameObject menuPanel;
+
     [Header("Login Panel")]
     public GameObject LoginPanel;
 
@@ -50,14 +53,17 @@ public class MainMenu : MonoBehaviourPunCallbacks
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
 
+    private PlayerSpawner spawner;
+
     #region UNITY
 
-    public void Awake()
+    public void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
 
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListEntries = new Dictionary<string, GameObject>();
+        spawner = GameObject.Find("Player Spawner").GetComponent<PlayerSpawner>();
 
         PlayerNameInput.placeholder.GetComponent<Text>().text = "Enter Player Name";
     }
@@ -154,6 +160,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         Debug.Log("Client successfully joined a room");
 
+        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+
         /*
         int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
@@ -167,10 +175,13 @@ public class MainMenu : MonoBehaviourPunCallbacks
             waitingStatusText.text = "Opponent Found!";
             //LoadGame(); UNCOMMENT FOR 1 PLAYER MOCK TESTING
         }*/
+        // we're loading the level twice
 
-        SceneManager.LoadScene("Room"); // we're loading the level twice
+        // PhotonNetwork.LoadLevel("Room");
+
+        menuPanel.GetComponent<Canvas>().enabled = false;
+        spawner.InstantiatePlayer();
     }
-
     #endregion
 
     #region UI CALLBACKS
@@ -232,6 +243,27 @@ public class MainMenu : MonoBehaviourPunCallbacks
         }
 
         SetActivePanel(RoomListPanel.name);
+    }
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log(newPlayer.NickName + " Entered");
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount == MaxPlayersPerRoom)
+        {
+            Debug.Log("Max Players Reached");
+
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel("MainGame");
+            }
+        }
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log(otherPlayer.NickName + " left");
     }
 
     #endregion

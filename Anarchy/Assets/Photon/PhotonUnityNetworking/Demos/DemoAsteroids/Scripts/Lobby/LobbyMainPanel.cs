@@ -45,7 +45,7 @@ namespace Photon.Pun.Demo.Asteroids
 
         public void Awake()
         {
-            PhotonNetwork.AutomaticallySyncScene = true;
+            // PhotonNetwork.AutomaticallySyncScene = false;
 
             cachedRoomList = new Dictionary<string, RoomInfo>();
             roomListEntries = new Dictionary<string, GameObject>();
@@ -107,6 +107,7 @@ namespace Photon.Pun.Demo.Asteroids
         {
             // joining (or entering) a room invalidates any cached lobby room list (even if LeaveLobby was not called due to just joining a room)
             cachedRoomList.Clear();
+
 
             SetActivePanel(InsideRoomPanel.name);
 
