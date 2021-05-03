@@ -7,6 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class RoomMenu : MonoBehaviourPunCallbacks
 {
+    /*
+     * 
+     * SCRIPT NOT CURRENTLY BEING USED
+     * 
+     */
+
     private const int MaxPlayersPerRoom = 3; // reset to 8 laters
 
     private void Awake()

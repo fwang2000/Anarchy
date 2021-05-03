@@ -7,6 +7,13 @@ using Photon.Realtime;
 
 public class NewBehaviourScript : MonoBehaviourPunCallbacks
 {
+
+    /*
+     * 
+     * SCRIPT NOT CURRENTLY BEING USED
+     * 
+     */
+
     [SerializeField]
     public GameObject LoginPanel;
 

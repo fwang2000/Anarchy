@@ -6,7 +6,6 @@ using Photon.Pun;
 
 public class GameManager : MonoBehaviour
 {
-
     private PlayerSpawner spawner;
     [SerializeField] private GameObject spawnpoints;
 
@@ -19,6 +18,7 @@ public class GameManager : MonoBehaviour
             spawner.InstantiatePlayer();
         }
 
-        PlayerControl.LocalPlayerInstance.transform.position = SpawnpointController.singletonInstance.spawnpoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position;
+        Vector3 originalPos = SpawnpointController.singletonInstance.spawnpoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position;
+        PlayerControl.LocalPlayerInstance.transform.position = new Vector3(originalPos.x, originalPos.y + 2.0f, originalPos.z);
     }
 }

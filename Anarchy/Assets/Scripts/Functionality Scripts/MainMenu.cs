@@ -160,24 +160,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         Debug.Log("Client successfully joined a room");
 
-        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
-
-        /*
-        int playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-
-        if (playerCount != MaxPlayersPerRoom)
-        {
-            Debug.Log("Client is waiting for an opponent");
-        }
-        else
-        {
-            Debug.Log("Match will begin");
-            waitingStatusText.text = "Opponent Found!";
-            //LoadGame(); UNCOMMENT FOR 1 PLAYER MOCK TESTING
-        }*/
-        // we're loading the level twice
-
-        // PhotonNetwork.LoadLevel("Room");
+        // MakeNicknameUnique();
 
         menuPanel.GetComponent<Canvas>().enabled = false;
         spawner.InstantiatePlayer();
@@ -200,7 +183,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         string roomName = RoomNameInputField.text;
         roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
-
+        
+        // MAKE CUSTOM ROOM OPTION TO HOLD A DICTIONARY OF ALL THE NICKNAMES IN THE ROOM!
         RoomOptions options = new RoomOptions { MaxPlayers = MaxPlayersPerRoom, PlayerTtl = 10000 };
 
         PhotonNetwork.CreateRoom(roomName, options, null);
@@ -253,6 +237,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
             Debug.Log("Max Players Reached");
 
             PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -355,6 +340,34 @@ public class MainMenu : MonoBehaviourPunCallbacks
             roomListEntries.Add(info.Name, entry);
         }
     }
+    
+    private void MakeNicknameUnique()
+    {
+        int duplicate = 1;
 
+        while (true)
+        {
+            Player[] otherPlayers = PhotonNetwork.PlayerListOthers;
+        }
+
+        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount - 1; i++)
+        {
+            Player comparedPlayer = PhotonNetwork.CurrentRoom.Players[0];
+            
+            if (PhotonNetwork.LocalPlayer.NickName.Equals(comparedPlayer.NickName)) {
+
+                if (duplicate == 1)
+                {
+                    PhotonNetwork.LocalPlayer.NickName = PhotonNetwork.LocalPlayer.NickName + " (" + duplicate + ")";
+                }
+                else
+                {
+                    int nicknameLength = PhotonNetwork.LocalPlayer.NickName.Length - 4;
+                    PhotonNetwork.LocalPlayer.NickName = PhotonNetwork.LocalPlayer.NickName.Substring(0, nicknameLength) + "(" + duplicate + ")";
+                }
+            }
+        }
+    }
+    
     #endregion
 }
