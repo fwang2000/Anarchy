@@ -345,10 +345,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         int duplicate = 1;
 
-        while (true)
-        {
-            Player[] otherPlayers = PhotonNetwork.PlayerListOthers;
-        }
+        Player[] otherPlayers = PhotonNetwork.PlayerListOthers;
 
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount - 1; i++)
         {
