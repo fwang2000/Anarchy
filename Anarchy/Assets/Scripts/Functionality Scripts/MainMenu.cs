@@ -1,11 +1,12 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class MainMenu : MonoBehaviourPunCallbacks
 {
@@ -47,13 +48,15 @@ public class MainMenu : MonoBehaviourPunCallbacks
     private bool isConnecting = false; */
 
     private const string GameVersion = "0.1"; // if we update the game, we want to ensure that players with different game versions cannot play each other
-    
+
     private const int MaxPlayersPerRoom = 3; // reset to 8 laters
 
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
 
     private PlayerSpawner spawner;
+
+    private Hashtable customProperties = new Hashtable();
 
     #region UNITY
 
@@ -69,28 +72,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     }
 
     #endregion
-    /*
-    public void FindOpponent()
-    {
 
-        isConnecting = true;
-
-        findOpponentPanel.SetActive(false);
-        waitingStatusPanel.SetActive(true);
-
-        waitingStatusText.text = "Searching...";
-
-        if (PhotonNetwork.IsConnected)
-        {
-
-            PhotonNetwork.JoinRandomRoom();
-        }
-        else
-        {
-            PhotonNetwork.GameVersion = GameVersion;
-            PhotonNetwork.ConnectUsingSettings();
-        }
-    }*/
     #region PUN CALLBACKS
 
     public override void OnConnectedToMaster()
@@ -98,16 +80,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
         Debug.Log("Connected To Master");
         this.SetActivePanel(SelectionPanel.name);
     }
-    /*
-    public override void OnConnectedToMaster()
-    {
-        Debug.Log("Connected To Master");
 
-        if (isConnecting)
-        {
-            PhotonNetwork.JoinRandomRoom();
-        }
-    }*/
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         ClearRoomListView();
@@ -149,9 +122,9 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         Debug.Log("No clients are waiting for an opponent, creating a new room");
 
-        string roomName = "Room " + Random.Range(1000, 10000);
+        string roomName = "Room " + UnityEngine.Random.Range(1000, 10000);
 
-        PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = MaxPlayersPerRoom });
+        CreateRoom(roomName);
     }
 
     public override void OnJoinedRoom()
@@ -159,8 +132,9 @@ public class MainMenu : MonoBehaviourPunCallbacks
         cachedRoomList.Clear();
 
         Debug.Log("Client successfully joined a room");
+        Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties["nicknames"]);
 
-        // MakeNicknameUnique();
+        MakeNicknameUnique();
 
         menuPanel.GetComponent<Canvas>().enabled = false;
         spawner.InstantiatePlayer();
@@ -178,16 +152,13 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         SetActivePanel(SelectionPanel.name);
     }
-    
+
     public void OnCreateRoomButtonClicked()
     {
         string roomName = RoomNameInputField.text;
-        roomName = (roomName.Equals(string.Empty)) ? "Room " + Random.Range(1000, 10000) : roomName;
-        
-        // MAKE CUSTOM ROOM OPTION TO HOLD A DICTIONARY OF ALL THE NICKNAMES IN THE ROOM!
-        RoomOptions options = new RoomOptions { MaxPlayers = MaxPlayersPerRoom, PlayerTtl = 10000 };
+        roomName = (roomName.Equals(string.Empty)) ? "Room " + UnityEngine.Random.Range(1000, 10000) : roomName;
 
-        PhotonNetwork.CreateRoom(roomName, options, null);
+        CreateRoom(roomName);
     }
 
     public void OnJoinRandomRoomButtonClicked()
@@ -253,33 +224,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     #endregion
 
-    /*
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Debug.Log("New Player Entered");
-
-        Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
-
-        if (PhotonNetwork.CurrentRoom.PlayerCount == MaxPlayersPerRoom)
-        {
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            PhotonNetwork.AutomaticallySyncScene = true;
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                LoadGame();
-            }
-        }
-    }
-
-    private void LoadGame()
-    {
-        waitingStatusText.text = "Enough Players";
-        Debug.Log("Game is Ready To Begin");
-
-        PhotonNetwork.LoadLevel("MainGame");
-    }*/
-
     #region HELPERS
 
     private void SetActivePanel(string activePanel)
@@ -340,13 +284,32 @@ public class MainMenu : MonoBehaviourPunCallbacks
             roomListEntries.Add(info.Name, entry);
         }
     }
-    
+
     private void MakeNicknameUnique()
     {
-        int duplicate = 1;
+        int duplicate = 0;
 
-        Player[] otherPlayers = PhotonNetwork.PlayerListOthers;
+        string[] nicknames = (string[]) PhotonNetwork.CurrentRoom.CustomProperties["nicknames"];
 
+        while (nicknames.Contains(PhotonNetwork.LocalPlayer.NickName))
+        {
+            ++duplicate;
+            PhotonNetwork.LocalPlayer.NickName = PhotonNetwork.LocalPlayer.NickName + " (" + duplicate + ")";
+        }
+
+        nicknames[PhotonNetwork.LocalPlayer.ActorNumber - 1] = PhotonNetwork.LocalPlayer.NickName;
+
+        for (int i = 0; i < 8; i++)
+        {
+            Debug.Log(nicknames[i]);
+        }
+
+        Hashtable setValue = new Hashtable();
+        setValue.Add("nicknames", nicknames);
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(setValue);
+
+        /*
         for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount - 1; i++)
         {
             Player comparedPlayer = PhotonNetwork.CurrentRoom.Players[0];
@@ -363,7 +326,22 @@ public class MainMenu : MonoBehaviourPunCallbacks
                     PhotonNetwork.LocalPlayer.NickName = PhotonNetwork.LocalPlayer.NickName.Substring(0, nicknameLength) + "(" + duplicate + ")";
                 }
             }
-        }
+        }*/
+    }
+
+    private void CreateRoom(string roomName)
+    {
+        string[] nicknames = new string[8] { "", "", "", "", "", "", "", "" };
+
+        PhotonNetwork.CreateRoom(roomName, new RoomOptions
+        {
+            MaxPlayers = MaxPlayersPerRoom,
+            CustomRoomProperties = new Hashtable
+                {
+                    { "nicknames", nicknames }
+                },
+            PlayerTtl = 10000
+        });
     }
     
     #endregion
