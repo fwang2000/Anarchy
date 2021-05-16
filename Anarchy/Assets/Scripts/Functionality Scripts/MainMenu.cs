@@ -1,15 +1,19 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Photon.Pun.UtilityScripts;
 
 public class MainMenu : MonoBehaviourPunCallbacks
 {
+    [Header("Top Panel")]
+    public GameObject topPanel;
+
     [Header("Menu Panel")]
     public GameObject menuPanel;
 
@@ -35,6 +39,9 @@ public class MainMenu : MonoBehaviourPunCallbacks
     public GameObject RoomListContent;
     public GameObject RoomListEntryPrefab;
 
+    [Header("Inside Room Panel")]
+    public GameObject InsideRoomPanel;
+
     /*
     [SerializeField]
     private GameObject findOpponentPanel = null;
@@ -55,8 +62,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
     private Dictionary<string, GameObject> roomListEntries;
 
     private PlayerSpawner spawner;
-
-    private Hashtable customProperties = new Hashtable();
 
     #region UNITY
 
@@ -122,7 +127,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         Debug.Log("No clients are waiting for an opponent, creating a new room");
 
-        string roomName = "Room " + UnityEngine.Random.Range(1000, 10000);
+        string roomName = "Room " + Random.Range(1000, 10000);
 
         CreateRoom(roomName);
     }
@@ -132,13 +137,10 @@ public class MainMenu : MonoBehaviourPunCallbacks
         cachedRoomList.Clear();
 
         Debug.Log("Client successfully joined a room");
-        Debug.Log(PhotonNetwork.CurrentRoom.CustomProperties["nicknames"]);
 
-        MakeNicknameUnique();
-
-        menuPanel.GetComponent<Canvas>().enabled = false;
-        spawner.InstantiatePlayer();
-    }
+        topPanel.SetActive(false);
+        SetActivePanel(InsideRoomPanel.name);
+    }   
     #endregion
 
     #region UI CALLBACKS
@@ -199,6 +201,19 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         SetActivePanel(RoomListPanel.name);
     }
+
+    public void OnPlayerButtonClicked()
+    {
+        menuPanel.GetComponent<Canvas>().enabled = false;
+
+        GameObject currButtonGameObject = EventSystem.current.currentSelectedGameObject;
+        Button currButton = currButtonGameObject.GetComponent<Button>();
+        currButton.interactable = false;
+
+        MakeNicknameUnique();
+        spawner.InstantiatePlayer();
+    }
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log(newPlayer.NickName + " Entered");
@@ -220,6 +235,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Debug.Log(otherPlayer.NickName + " left");
+
+        PhotonNetwork.DestroyPlayerObjects(otherPlayer);
     }
 
     #endregion
@@ -232,7 +249,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
         SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
         CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
         JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
-        RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
+        RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));
+        InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
     }
     private void ClearRoomListView()
     {
@@ -297,42 +315,20 @@ public class MainMenu : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = PhotonNetwork.LocalPlayer.NickName + " (" + duplicate + ")";
         }
 
-        nicknames[PhotonNetwork.LocalPlayer.ActorNumber - 1] = PhotonNetwork.LocalPlayer.NickName;
+        Debug.Log(PhotonNetwork.LocalPlayer.GetPlayerNumber());
 
-        for (int i = 0; i < 8; i++)
-        {
-            Debug.Log(nicknames[i]);
-        }
+        nicknames[PhotonNetwork.LocalPlayer.GetPlayerNumber()] = PhotonNetwork.LocalPlayer.NickName;
 
         Hashtable setValue = new Hashtable();
         setValue.Add("nicknames", nicknames);
 
         PhotonNetwork.CurrentRoom.SetCustomProperties(setValue);
-
-        /*
-        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount - 1; i++)
-        {
-            Player comparedPlayer = PhotonNetwork.CurrentRoom.Players[0];
-            
-            if (PhotonNetwork.LocalPlayer.NickName.Equals(comparedPlayer.NickName)) {
-
-                if (duplicate == 1)
-                {
-                    PhotonNetwork.LocalPlayer.NickName = PhotonNetwork.LocalPlayer.NickName + " (" + duplicate + ")";
-                }
-                else
-                {
-                    int nicknameLength = PhotonNetwork.LocalPlayer.NickName.Length - 4;
-                    PhotonNetwork.LocalPlayer.NickName = PhotonNetwork.LocalPlayer.NickName.Substring(0, nicknameLength) + "(" + duplicate + ")";
-                }
-            }
-        }*/
     }
 
     private void CreateRoom(string roomName)
     {
         string[] nicknames = new string[8] { "", "", "", "", "", "", "", "" };
-
+        
         PhotonNetwork.CreateRoom(roomName, new RoomOptions
         {
             MaxPlayers = MaxPlayersPerRoom,
@@ -343,6 +339,14 @@ public class MainMenu : MonoBehaviourPunCallbacks
             PlayerTtl = 10000
         });
     }
-    
+
+    private void OnPlayerNumberingChanged()
+    {
+        if (PhotonNetwork.LocalPlayer.GetPlayerNumber() >= 0)
+        {
+            MakeNicknameUnique();
+            spawner.InstantiatePlayer();
+        }
+    }
     #endregion
 }

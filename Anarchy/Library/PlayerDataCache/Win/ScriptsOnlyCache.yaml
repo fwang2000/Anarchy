@@ -22,6 +22,7 @@ ScriptsOnlyBuild:
     PhotonUnityNetworking.Editor.dll:
     - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.Utilities.dll:
+    - Photon.Pun.UtilityScripts.PlayerNumbering
     - Photon.Pun.UtilityScripts.TextButtonTransition
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonRigidbodyView
@@ -170,7 +171,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1514}
     - Class: 114
-      Script: {instanceID: 1564}
+      Script: {instanceID: 1562}
     - Class: 114
       Script: {instanceID: 1700}
     - Class: 114
@@ -189,6 +190,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 2244}
     - Class: 114
       Script: {instanceID: 2292}
+    - Class: 114
+      Script: {instanceID: 2382}
     - Class: 114
       Script: {instanceID: 2472}
     - Class: 114
@@ -376,6 +379,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.XR.LegacyInputHelpers.dll
     namespaceName: UnityEngine.XR.LegacyInputHelpers
     className: TransitionArmModel
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerEntry
   - hash:
       serializedVersion: 2
       Hash: b89ca8c8ae7041500fa1df2b061f55c9
@@ -1920,7 +1929,7 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
-      Hash: f7f4f5c45cabf91299dec75c2519e0f3
+      Hash: 8b37eba65b150f3772de7136b58bb650
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MainMenu
