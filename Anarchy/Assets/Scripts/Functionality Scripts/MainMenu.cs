@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun.UtilityScripts;
+using System;
 
 public class MainMenu : MonoBehaviourPunCallbacks
 {
@@ -74,6 +75,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
         spawner = GameObject.Find("Player Spawner").GetComponent<PlayerSpawner>();
 
         PlayerNameInput.placeholder.GetComponent<Text>().text = "Enter Player Name";
+
+        SetActivePanel(LoginPanel.name);
     }
 
     #endregion
@@ -127,7 +130,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         Debug.Log("No clients are waiting for an opponent, creating a new room");
 
-        string roomName = "Room " + Random.Range(1000, 10000);
+        string roomName = "Room " + UnityEngine.Random.Range(1000, 10000);
 
         CreateRoom(roomName);
     }
@@ -206,12 +209,11 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         menuPanel.GetComponent<Canvas>().enabled = false;
 
-        GameObject currButtonGameObject = EventSystem.current.currentSelectedGameObject;
-        Button currButton = currButtonGameObject.GetComponent<Button>();
-        currButton.interactable = false;
-
         MakeNicknameUnique();
         spawner.InstantiatePlayer();
+
+        string buttonName = EventSystem.current.currentSelectedGameObject.name;
+        GetComponent<PhotonView>().RPC("DisableButton", RpcTarget.AllBuffered, buttonName);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -315,8 +317,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = PhotonNetwork.LocalPlayer.NickName + " (" + duplicate + ")";
         }
 
-        Debug.Log(PhotonNetwork.LocalPlayer.GetPlayerNumber());
-
         nicknames[PhotonNetwork.LocalPlayer.GetPlayerNumber()] = PhotonNetwork.LocalPlayer.NickName;
 
         Hashtable setValue = new Hashtable();
@@ -340,13 +340,13 @@ public class MainMenu : MonoBehaviourPunCallbacks
         });
     }
 
-    private void OnPlayerNumberingChanged()
+
+    [PunRPC]
+    private void DisableButton(string name)
     {
-        if (PhotonNetwork.LocalPlayer.GetPlayerNumber() >= 0)
-        {
-            MakeNicknameUnique();
-            spawner.InstantiatePlayer();
-        }
+        GameObject currButtonGameObject = GameObject.Find("InsideRoomPanel/" + name);
+        Button currButton = currButtonGameObject.GetComponent<Button>();
+        currButton.interactable = false;
     }
     #endregion
 }
