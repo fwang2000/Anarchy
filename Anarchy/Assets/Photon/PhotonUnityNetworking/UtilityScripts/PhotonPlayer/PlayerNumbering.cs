@@ -89,7 +89,6 @@ namespace Photon.Pun.UtilityScripts
         public override void OnJoinedRoom()
         {
             this.RefreshData();
-            Debug.Log("run A");
         }
 
         public override void OnLeftRoom()
@@ -109,7 +108,6 @@ namespace Photon.Pun.UtilityScripts
         
         public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
         {
-            Debug.Log("run B");
             if (changedProps != null && changedProps.ContainsKey(PlayerNumbering.RoomPlayerIndexedProp))
             {
                 this.RefreshData();

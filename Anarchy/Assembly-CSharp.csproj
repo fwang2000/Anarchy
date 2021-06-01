@@ -57,7 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
+    <Compile Include="Assets\Scripts\Functionality Scripts\CharacterSelection.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Curse.cs" />
+    <Compile Include="Assets\Scripts\Functionality Scripts\PlayerEntry.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\WebSocket.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\RoomMenu.cs" />
     <Compile Include="Assets\Scripts\Gameplay\GameManager.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Assets\Scripts\UI Scripts\SettingsManager.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChannelSelector.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\NametagLookAt.cs" />
+    <Compile Include="Assets\Scripts\Functionality Scripts\RoomSettings.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\RoomListEntry.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
@@ -87,7 +90,7 @@
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\TopPanel.cs" />
-    <Compile Include="Assets\Scripts\Functionality Scripts\PlayerEntry.cs" />
+    <Compile Include="Assets\Scripts\Functionality Scripts\EditGameSettings.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,10 +12,10 @@ using System;
 public class MainMenu : MonoBehaviourPunCallbacks
 {
     [Header("Top Panel")]
-    public GameObject topPanel;
+    public GameObject TopPanel;
 
     [Header("Menu Panel")]
-    public GameObject menuPanel;
+    public GameObject MenuPanel;
 
     [Header("Login Panel")]
     public GameObject LoginPanel;
@@ -42,6 +41,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     [Header("Inside Room Panel")]
     public GameObject InsideRoomPanel;
+    public GameObject CharacterSelect;
 
     /*
     [SerializeField]
@@ -62,7 +62,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
 
-    private PlayerSpawner spawner;
+    // private PlayerSpawner spawner;
 
     #region UNITY
 
@@ -72,10 +72,11 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListEntries = new Dictionary<string, GameObject>();
-        spawner = GameObject.Find("Player Spawner").GetComponent<PlayerSpawner>();
+        // spawner = GameObject.Find("Player Spawner").GetComponent<PlayerSpawner>();
 
         PlayerNameInput.placeholder.GetComponent<Text>().text = "Enter Player Name";
 
+        TopPanel.SetActive(true);
         SetActivePanel(LoginPanel.name);
     }
 
@@ -141,9 +142,22 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         Debug.Log("Client successfully joined a room");
 
-        topPanel.SetActive(false);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable
+        {
+            { "character", null }
+        });
+
+        TopPanel.SetActive(false);
         SetActivePanel(InsideRoomPanel.name);
-    }   
+        CharacterSelect.SetActive(true);
+    }
+
+    public override void OnLeftRoom()
+    {
+        TopPanel.SetActive(true);
+        this.SetActivePanel(SelectionPanel.name);
+        ResetCharacterSelect();
+    }
     #endregion
 
     #region UI CALLBACKS
@@ -205,17 +219,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
         SetActivePanel(RoomListPanel.name);
     }
 
-    public void OnPlayerButtonClicked()
-    {
-        menuPanel.GetComponent<Canvas>().enabled = false;
-
-        MakeNicknameUnique();
-        spawner.InstantiatePlayer();
-
-        string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        GetComponent<PhotonView>().RPC("DisableButton", RpcTarget.AllBuffered, buttonName);
-    }
-
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log(newPlayer.NickName + " Entered");
@@ -227,18 +230,22 @@ public class MainMenu : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            if (PhotonNetwork.IsMasterClient)
+            /* if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.LoadLevel("MainGame");
-            }
+            }*/
         }
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Debug.Log(otherPlayer.NickName + " left");
-
-        PhotonNetwork.DestroyPlayerObjects(otherPlayer);
+        ResetCharacterSelect();
+        ResetNicknames(otherPlayer);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.DestroyPlayerObjects(otherPlayer);
+        }
     }
 
     #endregion
@@ -305,26 +312,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
         }
     }
 
-    private void MakeNicknameUnique()
-    {
-        int duplicate = 0;
-
-        string[] nicknames = (string[]) PhotonNetwork.CurrentRoom.CustomProperties["nicknames"];
-
-        while (nicknames.Contains(PhotonNetwork.LocalPlayer.NickName))
-        {
-            ++duplicate;
-            PhotonNetwork.LocalPlayer.NickName = PhotonNetwork.LocalPlayer.NickName + " (" + duplicate + ")";
-        }
-
-        nicknames[PhotonNetwork.LocalPlayer.GetPlayerNumber()] = PhotonNetwork.LocalPlayer.NickName;
-
-        Hashtable setValue = new Hashtable();
-        setValue.Add("nicknames", nicknames);
-
-        PhotonNetwork.CurrentRoom.SetCustomProperties(setValue);
-    }
-
     private void CreateRoom(string roomName)
     {
         string[] nicknames = new string[8] { "", "", "", "", "", "", "", "" };
@@ -336,17 +323,29 @@ public class MainMenu : MonoBehaviourPunCallbacks
                 {
                     { "nicknames", nicknames }
                 },
-            PlayerTtl = 10000
+            PlayerTtl = 0,
+            EmptyRoomTtl = 0,
         });
     }
 
-
-    [PunRPC]
-    private void DisableButton(string name)
+    private void ResetNicknames(Player player)
     {
-        GameObject currButtonGameObject = GameObject.Find("InsideRoomPanel/" + name);
-        Button currButton = currButtonGameObject.GetComponent<Button>();
-        currButton.interactable = false;
+        string[] nicknames = (string[])PhotonNetwork.CurrentRoom.CustomProperties["nicknames"];
+
+        nicknames[player.GetPlayerNumber()] = "";
+
+        Hashtable setValue = new Hashtable();
+        setValue.Add("nicknames", nicknames);
+
+        PhotonNetwork.CurrentRoom.SetCustomProperties(setValue);
+    }
+    private void ResetCharacterSelect()
+    {
+        string oldCharacterName = (string) PhotonNetwork.LocalPlayer.CustomProperties["character"];
+        if (oldCharacterName != null)
+        {
+            CharacterSelect.GetComponent<PhotonView>().RPC("ActivateButton", RpcTarget.AllBuffered, oldCharacterName);
+        }
     }
     #endregion
 }

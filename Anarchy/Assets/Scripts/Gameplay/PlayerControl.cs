@@ -11,6 +11,7 @@ public class PlayerControl : MonoBehaviourPun
     float gravity = 0.0f;
 
     private bool cursed = true;
+    private int ownerID;
 
     CharacterController controller;
 
@@ -90,8 +91,6 @@ public class PlayerControl : MonoBehaviourPun
 
         Vector3 heading = Vector3.Normalize(rightMovement + upMovement);
 
-        // transform.forward = heading;
-
         Vector3 movement = rightMovement + upMovement;
 
         movement.Normalize();
@@ -113,5 +112,28 @@ public class PlayerControl : MonoBehaviourPun
         {
             Debug.Log("enviro test");
         }
+    }
+
+    public static void SetColor(string color)
+    {
+        LocalPlayerInstance.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/" + color);
+    }
+
+    public static GameObject GetLocalPlayerModel()
+    {
+        return LocalPlayerInstance;
+    }
+
+    public void SetID(int id)
+    {
+        if (ownerID == 0)
+        {
+            ownerID = id;
+        }
+    }
+
+    public int GetPlayerID()
+    {
+        return ownerID;
     }
 }

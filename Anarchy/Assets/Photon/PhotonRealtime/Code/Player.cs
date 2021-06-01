@@ -391,6 +391,7 @@ namespace Photon.Realtime
         {
             if (propertiesToSet == null || propertiesToSet.Count == 0)
             {
+                Debug.Log("failed A");
                 return false;
             }
 
@@ -422,6 +423,7 @@ namespace Photon.Realtime
             {
                 if (customProps.Count == 0)
                 {
+                    Debug.Log("failed B");
                     return false;
                 }
                 if (expectedValues == null && webFlags == null)
@@ -431,7 +433,6 @@ namespace Photon.Realtime
                     return true;
                 }
             }
-
             return false;
         }
 

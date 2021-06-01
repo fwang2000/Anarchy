@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - CharacterSelection
     - GameManager
     - MainMenu
     - NametagLookAt
@@ -9,6 +10,7 @@ ScriptsOnlyBuild:
     - PlayerNameTag
     - PlayerSpawner
     - RoomListEntry
+    - RoomSettings
     - SettingsManager
     - SpawnpointController
     - Timer
@@ -96,19 +98,19 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1742}
+      Script: {instanceID: 1744}
     - Class: 114
-      Script: {instanceID: 1844}
+      Script: {instanceID: 1846}
     - Class: 114
-      Script: {instanceID: 2472}
-    - Class: 114
-      Script: {instanceID: 2516}
+      Script: {instanceID: 2474}
     - Class: 114
       Script: {instanceID: 2518}
     - Class: 114
-      Script: {instanceID: 2700}
+      Script: {instanceID: 2520}
     - Class: 114
-      Script: {instanceID: 2824}
+      Script: {instanceID: 2702}
+    - Class: 114
+      Script: {instanceID: 2826}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -173,81 +175,85 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1562}
     - Class: 114
-      Script: {instanceID: 1700}
+      Script: {instanceID: 1608}
     - Class: 114
-      Script: {instanceID: 1750}
+      Script: {instanceID: 1702}
     - Class: 114
-      Script: {instanceID: 1770}
+      Script: {instanceID: 1752}
     - Class: 114
-      Script: {instanceID: 1778}
+      Script: {instanceID: 1772}
     - Class: 114
-      Script: {instanceID: 1844}
+      Script: {instanceID: 1780}
     - Class: 114
-      Script: {instanceID: 2134}
+      Script: {instanceID: 1846}
     - Class: 114
-      Script: {instanceID: 2208}
+      Script: {instanceID: 2136}
     - Class: 114
-      Script: {instanceID: 2244}
+      Script: {instanceID: 2210}
     - Class: 114
-      Script: {instanceID: 2292}
+      Script: {instanceID: 2246}
     - Class: 114
-      Script: {instanceID: 2382}
+      Script: {instanceID: 2294}
     - Class: 114
-      Script: {instanceID: 2472}
+      Script: {instanceID: 2384}
     - Class: 114
-      Script: {instanceID: 2516}
+      Script: {instanceID: 2474}
     - Class: 114
-      Script: {instanceID: 2650}
+      Script: {instanceID: 2518}
     - Class: 114
-      Script: {instanceID: 2700}
+      Script: {instanceID: 2652}
     - Class: 114
-      Script: {instanceID: 2714}
+      Script: {instanceID: 2702}
     - Class: 114
-      Script: {instanceID: 2824}
+      Script: {instanceID: 2716}
     - Class: 114
-      Script: {instanceID: 2842}
+      Script: {instanceID: 2826}
     - Class: 114
-      Script: {instanceID: 2866}
+      Script: {instanceID: 2844}
     - Class: 114
-      Script: {instanceID: 3006}
+      Script: {instanceID: 2868}
     - Class: 114
-      Script: {instanceID: 3010}
+      Script: {instanceID: 3008}
     - Class: 114
-      Script: {instanceID: 3020}
+      Script: {instanceID: 3012}
     - Class: 114
-      Script: {instanceID: 3044}
+      Script: {instanceID: 3022}
     - Class: 114
-      Script: {instanceID: 3412}
+      Script: {instanceID: 3046}
     - Class: 114
-      Script: {instanceID: 3530}
+      Script: {instanceID: 3048}
     - Class: 114
-      Script: {instanceID: 3584}
+      Script: {instanceID: 3416}
     - Class: 114
-      Script: {instanceID: 3842}
+      Script: {instanceID: 3534}
     - Class: 114
-      Script: {instanceID: 3894}
+      Script: {instanceID: 3588}
     - Class: 114
-      Script: {instanceID: 3930}
+      Script: {instanceID: 3846}
     - Class: 114
-      Script: {instanceID: 3994}
+      Script: {instanceID: 3898}
     - Class: 114
-      Script: {instanceID: 4096}
+      Script: {instanceID: 3934}
+    - Class: 114
+      Script: {instanceID: 3998}
     - Class: 114
       Script: {instanceID: 4100}
     - Class: 114
-      Script: {instanceID: 4194}
+      Script: {instanceID: 4104}
     - Class: 114
-      Script: {instanceID: 4484}
+      Script: {instanceID: 4198}
     - Class: 114
-      Script: {instanceID: 4486}
+      Script: {instanceID: 4488}
     - Class: 114
-      Script: {instanceID: 4644}
+      Script: {instanceID: 4490}
     - Class: 114
-      Script: {instanceID: 4894}
+      Script: {instanceID: 4648}
     - Class: 114
-      Script: {instanceID: 4912}
+      Script: {instanceID: 4898}
     - Class: 114
-      Script: {instanceID: 4964}
+      Script: {instanceID: 4916}
+    - Class: 114
+      Script: {instanceID: 4968}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -273,6 +279,8 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 225
       Script: {instanceID: 0}
     - Class: 258
       Script: {instanceID: 0}
@@ -366,6 +374,12 @@ ScriptsOnlyBuild:
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
+    className: CharacterSelection
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
     className: Curse
   - hash:
       serializedVersion: 2
@@ -435,7 +449,7 @@ ScriptsOnlyBuild:
     className: GameVersionField
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: c0dccb76586f29494ff58935175c5919
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RoomMenu
@@ -1057,6 +1071,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: NametagLookAt
+  - hash:
+      serializedVersion: 2
+      Hash: c0dccb76586f29494ff58935175c5919
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: RoomSettings
   - hash:
       serializedVersion: 2
       Hash: 23066ceca838af0cf02e00e3cf5155c1
@@ -1929,7 +1949,7 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
-      Hash: 8b37eba65b150f3772de7136b58bb650
+      Hash: bd34bfe8baceeb2c9f6ebc503477540e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MainMenu
