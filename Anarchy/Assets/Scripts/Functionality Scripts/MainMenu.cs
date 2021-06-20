@@ -42,6 +42,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     [Header("Inside Room Panel")]
     public GameObject InsideRoomPanel;
     public GameObject CharacterSelect;
+    public GameObject StartGameButton;
 
     /*
     [SerializeField]
@@ -142,11 +143,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         Debug.Log("Client successfully joined a room");
 
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable
-        {
-            { "character", null }
-        });
-
         TopPanel.SetActive(false);
         SetActivePanel(InsideRoomPanel.name);
         CharacterSelect.SetActive(true);
@@ -156,7 +152,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         TopPanel.SetActive(true);
         this.SetActivePanel(SelectionPanel.name);
-        ResetCharacterSelect();
+        ResetCharacterSelect((string)PhotonNetwork.LocalPlayer.CustomProperties["character"]);
     }
     #endregion
 
@@ -223,27 +219,34 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         Debug.Log(newPlayer.NickName + " Entered");
 
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= MaxPlayersPerRoom - 2)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartGameButton.GetComponent<Button>().interactable = true;
+            }
+        }
+
         if (PhotonNetwork.CurrentRoom.PlayerCount == MaxPlayersPerRoom)
         {
             Debug.Log("Max Players Reached");
 
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
-
-            /* if (PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.LoadLevel("MainGame");
-            }*/
         }
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Debug.Log(otherPlayer.NickName + " left");
-        ResetCharacterSelect();
+        ResetCharacterSelect((string)otherPlayer.CustomProperties["character"]);
         ResetNicknames(otherPlayer);
         if (PhotonNetwork.IsMasterClient)
         {
+            if (PhotonNetwork.CurrentRoom.PlayerCount < MaxPlayersPerRoom - 2)
+            {
+                StartGameButton.GetComponent<Button>().interactable = false;
+            }
             PhotonNetwork.DestroyPlayerObjects(otherPlayer);
         }
     }
@@ -315,13 +318,19 @@ public class MainMenu : MonoBehaviourPunCallbacks
     private void CreateRoom(string roomName)
     {
         string[] nicknames = new string[8] { "", "", "", "", "", "", "", "" };
-        
+        int[] models = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+
         PhotonNetwork.CreateRoom(roomName, new RoomOptions
         {
             MaxPlayers = MaxPlayersPerRoom,
             CustomRoomProperties = new Hashtable
                 {
-                    { "nicknames", nicknames }
+                    { "nicknames", nicknames },
+                    { "models", models},
+                    { "moveSpeed", 10f },
+                    { "roundTime", 5f },
+                    { "curseTime", 1f},
+                    { "artifactsDR", "LOW"}
                 },
             PlayerTtl = 0,
             EmptyRoomTtl = 0,
@@ -339,9 +348,9 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CurrentRoom.SetCustomProperties(setValue);
     }
-    private void ResetCharacterSelect()
+    private void ResetCharacterSelect(string oldCharacterName)
     {
-        string oldCharacterName = (string) PhotonNetwork.LocalPlayer.CustomProperties["character"];
+        Debug.Log(oldCharacterName);
         if (oldCharacterName != null)
         {
             CharacterSelect.GetComponent<PhotonView>().RPC("ActivateButton", RpcTarget.AllBuffered, oldCharacterName);

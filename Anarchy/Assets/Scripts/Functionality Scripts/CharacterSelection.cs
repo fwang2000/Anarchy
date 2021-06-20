@@ -13,7 +13,9 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
 {
     private PlayerSpawner spawner;
     private GameObject playerCharacter;
-    private Hashtable playerProps = new Hashtable();
+
+    [SerializeField]
+    private GameObject StartGameButton;
 
     // Start is called before the first frame update
     void Start()
@@ -34,17 +36,15 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
             MakeNicknameUnique();
             spawner.InstantiatePlayer();
             playerCharacter = spawner.GetPlayer();
-            playerCharacter.GetComponent<PlayerControl>().SetID(PhotonNetwork.LocalPlayer.ActorNumber);
+            playerCharacter.GetComponent<PhotonView>().RPC("SetID", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer.ActorNumber);
         }
 
         string newCharacterName = EventSystem.current.currentSelectedGameObject.name;
+        SetCustomCharacter(newCharacterName);
         GetComponent<PhotonView>().RPC("DisableButton", RpcTarget.AllBuffered, newCharacterName);
 
-        SetCustomCharacter(newCharacterName);
-
         transform.gameObject.SetActive(false);
-
-        GetComponent<PhotonView>().RPC("SetColor", RpcTarget.AllBuffered);
+        GetComponent<PhotonView>().RPC("SetColor", RpcTarget.OthersBuffered);
     }
 
     private void MakeNicknameUnique()
@@ -73,6 +73,16 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
         setValue.Add("nicknames", nicknames);
 
         PhotonNetwork.CurrentRoom.SetCustomProperties(setValue);
+
+        EnableStartButton();
+    }
+
+    private void EnableStartButton()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartGameButton.SetActive(true);
+        }
     }
 
     [PunRPC]
@@ -94,16 +104,10 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            Debug.Log(player.CustomProperties["character"]);
-        }
-
         foreach (GameObject playerModel in players)
         {
             foreach (Player player in PhotonNetwork.PlayerList)
             {
-                Debug.Log(playerModel.GetComponent<PlayerControl>().GetPlayerID() + ", " + player.ActorNumber);
                 if (playerModel.GetComponent<PlayerControl>().GetPlayerID() == player.ActorNumber)
                 {
                     string color = (string) player.CustomProperties["character"];
@@ -129,9 +133,10 @@ public class CharacterSelection : MonoBehaviourPunCallbacks
 
     private void SetCustomCharacter(string newCharacterName)
     {
-        string character = newCharacterName;
+        Hashtable playerProps = new Hashtable();
+        playerProps.Add("character", newCharacterName);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProps);
 
-        playerProps["character"] = character;
-        PhotonNetwork.LocalPlayer.CustomProperties = playerProps;
+        playerCharacter.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/" + newCharacterName);
     }
 }

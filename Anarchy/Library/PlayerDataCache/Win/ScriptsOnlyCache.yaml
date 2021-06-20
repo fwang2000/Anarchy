@@ -2,9 +2,12 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CharacterSelection
+    - EditGameSettings
     - GameManager
+    - GameSettingsController
     - MainMenu
     - NametagLookAt
+    - PersonalSettingsController
     - PlayerControl
     - PlayerNameInput
     - PlayerNameTag
@@ -13,6 +16,7 @@ ScriptsOnlyBuild:
     - RoomSettings
     - SettingsManager
     - SpawnpointController
+    - StartGame
     - Timer
     - TopPanel
     PhotonUnityNetworking.Demos.dll:
@@ -43,6 +47,7 @@ ScriptsOnlyBuild:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro.dll:
     - TMPro.TMP_FontAsset
+    - TMPro.TMP_InputField
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
@@ -102,15 +107,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1846}
     - Class: 114
-      Script: {instanceID: 2474}
-    - Class: 114
-      Script: {instanceID: 2518}
+      Script: {instanceID: 2476}
     - Class: 114
       Script: {instanceID: 2520}
     - Class: 114
-      Script: {instanceID: 2702}
+      Script: {instanceID: 2522}
     - Class: 114
-      Script: {instanceID: 2826}
+      Script: {instanceID: 2706}
+    - Class: 114
+      Script: {instanceID: 2830}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -175,6 +180,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1562}
     - Class: 114
+      Script: {instanceID: 1600}
+    - Class: 114
       Script: {instanceID: 1608}
     - Class: 114
       Script: {instanceID: 1702}
@@ -195,65 +202,73 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 2294}
     - Class: 114
-      Script: {instanceID: 2384}
+      Script: {instanceID: 2344}
     - Class: 114
-      Script: {instanceID: 2474}
+      Script: {instanceID: 2386}
     - Class: 114
-      Script: {instanceID: 2518}
+      Script: {instanceID: 2476}
     - Class: 114
-      Script: {instanceID: 2652}
+      Script: {instanceID: 2520}
     - Class: 114
-      Script: {instanceID: 2702}
+      Script: {instanceID: 2596}
     - Class: 114
-      Script: {instanceID: 2716}
+      Script: {instanceID: 2656}
     - Class: 114
-      Script: {instanceID: 2826}
+      Script: {instanceID: 2706}
     - Class: 114
-      Script: {instanceID: 2844}
+      Script: {instanceID: 2720}
     - Class: 114
-      Script: {instanceID: 2868}
+      Script: {instanceID: 2830}
     - Class: 114
-      Script: {instanceID: 3008}
+      Script: {instanceID: 2848}
+    - Class: 114
+      Script: {instanceID: 2872}
     - Class: 114
       Script: {instanceID: 3012}
     - Class: 114
-      Script: {instanceID: 3022}
+      Script: {instanceID: 3016}
     - Class: 114
-      Script: {instanceID: 3046}
+      Script: {instanceID: 3026}
     - Class: 114
-      Script: {instanceID: 3048}
+      Script: {instanceID: 3050}
     - Class: 114
-      Script: {instanceID: 3416}
+      Script: {instanceID: 3052}
     - Class: 114
-      Script: {instanceID: 3534}
+      Script: {instanceID: 3420}
     - Class: 114
-      Script: {instanceID: 3588}
+      Script: {instanceID: 3538}
     - Class: 114
-      Script: {instanceID: 3846}
+      Script: {instanceID: 3592}
     - Class: 114
-      Script: {instanceID: 3898}
+      Script: {instanceID: 3850}
     - Class: 114
-      Script: {instanceID: 3934}
+      Script: {instanceID: 3902}
     - Class: 114
-      Script: {instanceID: 3998}
+      Script: {instanceID: 3924}
     - Class: 114
-      Script: {instanceID: 4100}
+      Script: {instanceID: 3940}
     - Class: 114
-      Script: {instanceID: 4104}
+      Script: {instanceID: 4004}
     - Class: 114
-      Script: {instanceID: 4198}
+      Script: {instanceID: 4106}
     - Class: 114
-      Script: {instanceID: 4488}
+      Script: {instanceID: 4110}
     - Class: 114
-      Script: {instanceID: 4490}
+      Script: {instanceID: 4204}
     - Class: 114
-      Script: {instanceID: 4648}
+      Script: {instanceID: 4494}
     - Class: 114
-      Script: {instanceID: 4898}
+      Script: {instanceID: 4496}
     - Class: 114
-      Script: {instanceID: 4916}
+      Script: {instanceID: 4654}
     - Class: 114
-      Script: {instanceID: 4968}
+      Script: {instanceID: 4742}
+    - Class: 114
+      Script: {instanceID: 4906}
+    - Class: 114
+      Script: {instanceID: 4924}
+    - Class: 114
+      Script: {instanceID: 4976}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -371,7 +386,7 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: d5a307aa0c06d639b71196ba9d1e3f3c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CharacterSelection
@@ -719,6 +734,12 @@ ScriptsOnlyBuild:
     className: CinemachineOrbitalTransposer
   - hash:
       serializedVersion: 2
+      Hash: 1cf36d33dbb915749bca4f92edf8bfe3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EditGameSettings
+  - hash:
+      serializedVersion: 2
       Hash: d329540117e6b6c523bded68046af505
     assemblyName: PhotonUnityNetworking.Demos.dll
     namespaceName: Photon.Pun.Demo.Cockpit
@@ -813,6 +834,12 @@ ScriptsOnlyBuild:
     assemblyName: Cinemachine.dll
     namespaceName: Cinemachine
     className: CinemachineVirtualCamera
+  - hash:
+      serializedVersion: 2
+      Hash: c6693a136877a4d4517db2cbd662ad21
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameSettingsController
   - hash:
       serializedVersion: 2
       Hash: 46a296a078af6e2a02857aa18e9cdf2b
@@ -1073,7 +1100,7 @@ ScriptsOnlyBuild:
     className: NametagLookAt
   - hash:
       serializedVersion: 2
-      Hash: c0dccb76586f29494ff58935175c5919
+      Hash: 8a576af931363fc5127a0545df6aa2e3
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RoomSettings
@@ -1499,6 +1526,12 @@ ScriptsOnlyBuild:
     className: LobbyMainPanel
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: StartGame
+  - hash:
+      serializedVersion: 2
       Hash: 74c875e0f15c48e0a55f06093aa93e15
     assemblyName: PhotonUnityNetworking.Demos.dll
     namespaceName: Photon.Pun.Demo.Cockpit
@@ -1859,6 +1892,12 @@ ScriptsOnlyBuild:
     className: PunTurnManager
   - hash:
       serializedVersion: 2
+      Hash: 85f7c80932db8a05054f2358d00f438d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PersonalSettingsController
+  - hash:
+      serializedVersion: 2
       Hash: 11bdd61587db747672b66c52442395d8
     assemblyName: PhotonUnityNetworking.Demos.dll
     namespaceName: Photon.Pun.Demo.Cockpit
@@ -1949,7 +1988,7 @@ ScriptsOnlyBuild:
     className: TouchInputModule
   - hash:
       serializedVersion: 2
-      Hash: bd34bfe8baceeb2c9f6ebc503477540e
+      Hash: 33ec3bb5850fdd8a199423b7d62f30c4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MainMenu

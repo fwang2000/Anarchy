@@ -62,6 +62,7 @@ public class RoomSettings : MonoBehaviour
     public void OnClickedEditButton()
     {
         EditPanel.SetActive(true);
+
     }
     public void OnClickedHelpButton()
     {

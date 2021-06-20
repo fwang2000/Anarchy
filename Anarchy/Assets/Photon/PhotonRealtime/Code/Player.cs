@@ -428,6 +428,7 @@ namespace Photon.Realtime
                 }
                 if (expectedValues == null && webFlags == null)
                 {
+                    Debug.Log("c");
                     this.CustomProperties.Merge(customProps);
                     this.CustomProperties.StripKeysWithNullValues();
                     return true;

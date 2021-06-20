@@ -3,6 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Photon.Pun.UtilityScripts;
 
 public class PlayerControl : MonoBehaviourPun
 {
@@ -114,26 +117,20 @@ public class PlayerControl : MonoBehaviourPun
         }
     }
 
-    public static void SetColor(string color)
-    {
-        LocalPlayerInstance.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/" + color);
-    }
-
-    public static GameObject GetLocalPlayerModel()
-    {
-        return LocalPlayerInstance;
-    }
-
+    [PunRPC]
     public void SetID(int id)
     {
-        if (ownerID == 0)
-        {
-            ownerID = id;
-        }
+        ownerID = id;
     }
 
     public int GetPlayerID()
     {
         return ownerID;
+    }
+
+    [PunRPC]
+    public void SetSpeed()
+    {
+        moveSpeed = (float)PhotonNetwork.CurrentRoom.CustomProperties["moveSpeed"];
     }
 }

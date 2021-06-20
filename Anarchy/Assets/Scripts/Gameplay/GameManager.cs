@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     private PlayerSpawner spawner;
     [SerializeField] private GameObject spawnpoints;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,13 @@ public class GameManager : MonoBehaviour
             spawner.InstantiatePlayer();
         }
 
+        player = spawner.GetPlayer();
         Vector3 originalPos = SpawnpointController.singletonInstance.spawnpoints[PhotonNetwork.LocalPlayer.ActorNumber - 1].position;
         PlayerControl.LocalPlayerInstance.transform.position = new Vector3(originalPos.x, originalPos.y + 2.0f, originalPos.z);
+    }
+
+    void SetGameSettings()
+    {
+        
     }
 }
