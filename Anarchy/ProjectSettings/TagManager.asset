@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Environment
   - PlayerCamera
+  - Artifact
   layers:
   - Default
   - TransparentFX

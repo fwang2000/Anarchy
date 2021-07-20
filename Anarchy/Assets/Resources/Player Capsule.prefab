@@ -228,6 +228,8 @@ GameObject:
   - component: {fileID: 3203266961048774235}
   - component: {fileID: -1705661795922684071}
   - component: {fileID: 7980877244468335468}
+  - component: {fileID: -3995572366935422493}
+  - component: {fileID: 3409858319334833758}
   m_Layer: 0
   m_Name: Player Capsule
   m_TagString: Player
@@ -381,6 +383,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nickname: {fileID: 5815559523676937631}
+--- !u!136 &-3995572366935422493
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7349112096620969149}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &3409858319334833758
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7349112096620969149}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8058681152600967560
 GameObject:
   m_ObjectHideFlags: 0

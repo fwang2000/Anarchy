@@ -1,8 +1,10 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - ArtifactControlScript
     - CharacterSelection
     - EditGameSettings
+    - FontColorChange
     - GameManager
     - GameSettingsController
     - MainMenu
@@ -103,28 +105,44 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1744}
+      Script: {instanceID: 1524}
     - Class: 114
-      Script: {instanceID: 1846}
+      Script: {instanceID: 1572}
     - Class: 114
-      Script: {instanceID: 2476}
+      Script: {instanceID: 1754}
     - Class: 114
-      Script: {instanceID: 2520}
+      Script: {instanceID: 1856}
     - Class: 114
-      Script: {instanceID: 2522}
+      Script: {instanceID: 2486}
     - Class: 114
-      Script: {instanceID: 2706}
+      Script: {instanceID: 2530}
     - Class: 114
-      Script: {instanceID: 2830}
+      Script: {instanceID: 2532}
+    - Class: 114
+      Script: {instanceID: 2666}
+    - Class: 114
+      Script: {instanceID: 2716}
+    - Class: 114
+      Script: {instanceID: 2840}
+    - Class: 114
+      Script: {instanceID: 3022}
+    - Class: 114
+      Script: {instanceID: 3026}
+    - Class: 114
+      Script: {instanceID: 3320}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
+      Script: {instanceID: 0}
+    - Class: 135
       Script: {instanceID: 0}
     - Class: 136
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
@@ -174,101 +192,103 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1510}
+      Script: {instanceID: 1520}
     - Class: 114
-      Script: {instanceID: 1514}
+      Script: {instanceID: 1524}
     - Class: 114
-      Script: {instanceID: 1562}
+      Script: {instanceID: 1572}
     - Class: 114
-      Script: {instanceID: 1600}
+      Script: {instanceID: 1610}
     - Class: 114
-      Script: {instanceID: 1608}
+      Script: {instanceID: 1618}
     - Class: 114
-      Script: {instanceID: 1702}
+      Script: {instanceID: 1712}
     - Class: 114
-      Script: {instanceID: 1752}
+      Script: {instanceID: 1762}
     - Class: 114
-      Script: {instanceID: 1772}
+      Script: {instanceID: 1782}
     - Class: 114
-      Script: {instanceID: 1780}
+      Script: {instanceID: 1790}
     - Class: 114
-      Script: {instanceID: 1846}
+      Script: {instanceID: 1856}
     - Class: 114
-      Script: {instanceID: 2136}
+      Script: {instanceID: 2146}
     - Class: 114
-      Script: {instanceID: 2210}
+      Script: {instanceID: 2220}
     - Class: 114
-      Script: {instanceID: 2246}
+      Script: {instanceID: 2256}
     - Class: 114
-      Script: {instanceID: 2294}
+      Script: {instanceID: 2304}
     - Class: 114
-      Script: {instanceID: 2344}
+      Script: {instanceID: 2354}
     - Class: 114
-      Script: {instanceID: 2386}
+      Script: {instanceID: 2396}
     - Class: 114
-      Script: {instanceID: 2476}
+      Script: {instanceID: 2486}
     - Class: 114
-      Script: {instanceID: 2520}
+      Script: {instanceID: 2530}
     - Class: 114
-      Script: {instanceID: 2596}
+      Script: {instanceID: 2606}
     - Class: 114
-      Script: {instanceID: 2656}
+      Script: {instanceID: 2666}
     - Class: 114
-      Script: {instanceID: 2706}
+      Script: {instanceID: 2716}
     - Class: 114
-      Script: {instanceID: 2720}
+      Script: {instanceID: 2730}
     - Class: 114
-      Script: {instanceID: 2830}
+      Script: {instanceID: 2840}
     - Class: 114
-      Script: {instanceID: 2848}
+      Script: {instanceID: 2858}
     - Class: 114
-      Script: {instanceID: 2872}
+      Script: {instanceID: 2882}
     - Class: 114
-      Script: {instanceID: 3012}
-    - Class: 114
-      Script: {instanceID: 3016}
+      Script: {instanceID: 3022}
     - Class: 114
       Script: {instanceID: 3026}
     - Class: 114
-      Script: {instanceID: 3050}
+      Script: {instanceID: 3036}
     - Class: 114
-      Script: {instanceID: 3052}
+      Script: {instanceID: 3060}
     - Class: 114
-      Script: {instanceID: 3420}
+      Script: {instanceID: 3062}
     - Class: 114
-      Script: {instanceID: 3538}
+      Script: {instanceID: 3432}
     - Class: 114
-      Script: {instanceID: 3592}
+      Script: {instanceID: 3550}
     - Class: 114
-      Script: {instanceID: 3850}
+      Script: {instanceID: 3604}
     - Class: 114
-      Script: {instanceID: 3902}
+      Script: {instanceID: 3862}
     - Class: 114
-      Script: {instanceID: 3924}
+      Script: {instanceID: 3914}
     - Class: 114
-      Script: {instanceID: 3940}
+      Script: {instanceID: 3936}
     - Class: 114
-      Script: {instanceID: 4004}
+      Script: {instanceID: 3952}
     - Class: 114
-      Script: {instanceID: 4106}
+      Script: {instanceID: 4016}
     - Class: 114
-      Script: {instanceID: 4110}
+      Script: {instanceID: 4118}
     - Class: 114
-      Script: {instanceID: 4204}
+      Script: {instanceID: 4122}
     - Class: 114
-      Script: {instanceID: 4494}
+      Script: {instanceID: 4216}
     - Class: 114
-      Script: {instanceID: 4496}
+      Script: {instanceID: 4506}
     - Class: 114
-      Script: {instanceID: 4654}
+      Script: {instanceID: 4508}
     - Class: 114
-      Script: {instanceID: 4742}
+      Script: {instanceID: 4666}
     - Class: 114
-      Script: {instanceID: 4906}
+      Script: {instanceID: 4754}
     - Class: 114
-      Script: {instanceID: 4924}
+      Script: {instanceID: 4892}
     - Class: 114
-      Script: {instanceID: 4976}
+      Script: {instanceID: 4920}
+    - Class: 114
+      Script: {instanceID: 4938}
+    - Class: 114
+      Script: {instanceID: 4990}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -488,7 +508,7 @@ ScriptsOnlyBuild:
     className: SlotLanes
   - hash:
       serializedVersion: 2
-      Hash: 702ca48f6b659dadbecf09ddedf0ecc7
+      Hash: 9a4aa7dfe25be0aec6d9aca0095a4ab8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -1100,7 +1120,7 @@ ScriptsOnlyBuild:
     className: NametagLookAt
   - hash:
       serializedVersion: 2
-      Hash: 8a576af931363fc5127a0545df6aa2e3
+      Hash: e9b5db36827e525a345d9e8f6ca13591
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RoomSettings
@@ -1200,6 +1220,12 @@ ScriptsOnlyBuild:
     assemblyName: Cinemachine.dll
     namespaceName: Cinemachine
     className: CinemachineSmoothPath
+  - hash:
+      serializedVersion: 2
+      Hash: 7ab7e3f0f8d3b6708e1a2b9cccfe6bae
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ArtifactControlScript
   - hash:
       serializedVersion: 2
       Hash: afb97f21bf5ca1f779240368ac4bb239
@@ -1956,6 +1982,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ActivationPlayableAsset
+  - hash:
+      serializedVersion: 2
+      Hash: ac5adddccc4355a442f13295b890c2eb
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FontColorChange
   - hash:
       serializedVersion: 2
       Hash: bd543bad7f9f6262f10595aadb130d22

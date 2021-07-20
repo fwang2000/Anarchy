@@ -28,11 +28,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
     [Header("Create Room Panel")]
     public GameObject CreateRoomPanel;
 
-    public InputField RoomNameInputField;
-
-    [Header("Join Random Room Panel")]
-    public GameObject JoinRandomRoomPanel;
-
     [Header("Room List Panel")]
     public GameObject RoomListPanel;
 
@@ -58,7 +53,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     private const string GameVersion = "0.1"; // if we update the game, we want to ensure that players with different game versions cannot play each other
 
-    private const int MaxPlayersPerRoom = 3; // reset to 8 laters
+    private const int MaxPlayersPerRoom = 3; // reset to 8 later
 
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
@@ -128,15 +123,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
         SetActivePanel(SelectionPanel.name);
     }
 
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        Debug.Log("No clients are waiting for an opponent, creating a new room");
-
-        string roomName = "Room " + UnityEngine.Random.Range(1000, 10000);
-
-        CreateRoom(roomName);
-    }
-
     public override void OnJoinedRoom()
     {
         cachedRoomList.Clear();
@@ -152,7 +138,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         TopPanel.SetActive(true);
         this.SetActivePanel(SelectionPanel.name);
-        ResetCharacterSelect((string)PhotonNetwork.LocalPlayer.CustomProperties["character"]);
     }
     #endregion
 
@@ -170,17 +155,10 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     public void OnCreateRoomButtonClicked()
     {
-        string roomName = RoomNameInputField.text;
+        string roomName = "";
         roomName = (roomName.Equals(string.Empty)) ? "Room " + UnityEngine.Random.Range(1000, 10000) : roomName;
 
         CreateRoom(roomName);
-    }
-
-    public void OnJoinRandomRoomButtonClicked()
-    {
-        SetActivePanel(JoinRandomRoomPanel.name);
-
-        PhotonNetwork.JoinRandomRoom();
     }
 
     public void OnLeaveGameButtonClicked()
@@ -215,6 +193,11 @@ public class MainMenu : MonoBehaviourPunCallbacks
         SetActivePanel(RoomListPanel.name);
     }
 
+    public void OnHomeButtonClicked()
+    {
+        SetActivePanel(SelectionPanel.name);
+    }
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log(newPlayer.NickName + " Entered");
@@ -243,6 +226,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
         ResetNicknames(otherPlayer);
         if (PhotonNetwork.IsMasterClient)
         {
+            InsideRoomPanel.transform.Find("RoomSettings").GetComponent<RoomSettings>().ResetMasterClient(true);
+
             if (PhotonNetwork.CurrentRoom.PlayerCount < MaxPlayersPerRoom - 2)
             {
                 StartGameButton.GetComponent<Button>().interactable = false;
@@ -260,7 +245,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
         LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
         SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
         CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
-        JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
         RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));
         InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
     }
@@ -355,6 +339,12 @@ public class MainMenu : MonoBehaviourPunCallbacks
         {
             CharacterSelect.GetComponent<PhotonView>().RPC("ActivateButton", RpcTarget.AllBuffered, oldCharacterName);
         }
+    }
+
+    public void OnRefreshButtonClicked()
+    {
+        ClearRoomListView();
+        UpdateRoomListView();
     }
     #endregion
 }
