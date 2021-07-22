@@ -14,7 +14,6 @@ public class FontColorChange : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private void Start()
     {
         loginTextGUI = loginText.GetComponent<TextMeshProUGUI>();
-        Debug.Log(loginTextGUI);
     }
 
     private void Update()

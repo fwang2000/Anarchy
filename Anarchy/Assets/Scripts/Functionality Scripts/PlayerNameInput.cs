@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class PlayerNameInput : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI nameTMP;
+    private InputField nameInputField;
 
     [SerializeField]
     private Button continueButton;
@@ -23,11 +23,17 @@ public class PlayerNameInput : MonoBehaviour
 
     private void SetUpInputField()
     {
+        Debug.Log("A");
+
         if (!PlayerPrefs.HasKey(PlayerPrefsNameKey)) { return; }
+
+        Debug.Log("Default Name Exists");
 
         string defaultName = PlayerPrefs.GetString(PlayerPrefsNameKey);
 
-        nameTMP.text = defaultName;
+        Debug.Log(defaultName);
+
+        nameInputField.text = defaultName;
 
         SetPlayerName(defaultName);
     }
@@ -39,11 +45,9 @@ public class PlayerNameInput : MonoBehaviour
 
     public void SavePlayerName()
     {
-        string playerName = nameTMP.text;
+        string playerName = nameInputField.text;
 
         PhotonNetwork.NickName = playerName;
-
-        Debug.Log(playerName);
 
         PlayerPrefs.SetString(PlayerPrefsNameKey, playerName);
     }
