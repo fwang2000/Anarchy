@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using TMPro;
 
 public class RoomListEntry : MonoBehaviour
 {
-    public Text RoomNameText;
-    public Text RoomPlayersText;
+    public TextMeshProUGUI RoomNameText;
+    public TextMeshProUGUI RoomIDText;
+    public TextMeshProUGUI RoomPlayersText;
     public Button JoinRoomButton;
 
     private string roomName;
@@ -25,11 +27,13 @@ public class RoomListEntry : MonoBehaviour
         });
     }
 
-    public void Initialize(string name, byte currentPlayers, byte maxPlayers)
+    public void Initialize(string ownerName, string id, byte currentPlayers, byte maxPlayers)
     {
-        roomName = name;
+        roomName = id;
 
-        RoomNameText.text = name;
+        RoomNameText.text = ownerName + "'s room";
+        RoomIDText.text = id.Substring(5);
         RoomPlayersText.text = currentPlayers + " / " + maxPlayers;
+        JoinRoomButton.GetComponentInChildren<TextMeshProUGUI>().text = "JOIN";
     }
 }

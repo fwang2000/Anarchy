@@ -1,44 +1,51 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using Photon.Pun;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class Timer : MonoBehaviour
+public class Timer : MonoBehaviourPunCallbacks
 {
-    private float timeRemaining;
-    private bool timerIsRunning;
-
-    [SerializeField]
-    private TextMeshProUGUI text;
+    protected float timeRemaining;
+    protected float curseTime;
+    protected bool timerIsRunning;
+    protected string propertyUpdated;
+    protected double startTime;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        timeRemaining = 10.0f;
         timerIsRunning = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected void RunTimer()
     {
-        text.text = timeRemaining.ToString("F2");
+        if (startTime == 0)
+        {
+            return;
+        }
+
         if (timerIsRunning)
         {
             if (timeRemaining > 0.0f)
             {
-                timeRemaining -= Time.deltaTime;
+                timeRemaining = curseTime - (float)(PhotonNetwork.Time - startTime);
             }
             else
             {
                 timeRemaining = 0.0f;
                 timerIsRunning = false;
             }
-
         }
     }
 
-    public void SetTime(float time)
+    public void SetTime(string htkey)
     {
-        timeRemaining = time;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Hashtable ht = new Hashtable { { htkey, PhotonNetwork.Time } };
+            PhotonNetwork.CurrentRoom.SetCustomProperties(ht);
+        }
+        timerIsRunning = true;
     }
 }

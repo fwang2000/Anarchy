@@ -23,15 +23,9 @@ public class PlayerNameInput : MonoBehaviour
 
     private void SetUpInputField()
     {
-        Debug.Log("A");
-
         if (!PlayerPrefs.HasKey(PlayerPrefsNameKey)) { return; }
 
-        Debug.Log("Default Name Exists");
-
         string defaultName = PlayerPrefs.GetString(PlayerPrefsNameKey);
-
-        Debug.Log(defaultName);
 
         nameInputField.text = defaultName;
 

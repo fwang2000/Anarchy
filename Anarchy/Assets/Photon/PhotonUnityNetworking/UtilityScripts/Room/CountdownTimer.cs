@@ -169,7 +169,6 @@ namespace Photon.Pun.UtilityScripts
             };
             PhotonNetwork.CurrentRoom.SetCustomProperties(props);
 
-
             Debug.Log("Set Custom Props for Time: "+ props.ToStringFull() + " wasSet: "+wasSet);
         }
     }

@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Gameplay\PlayerControl.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\LobbyMenu.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Artifact\TracerUpdate.cs" />
     <Compile Include="Assets\Photon\PhotonLibs\WebSocket\SocketWebTcp.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\CurseControl.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\PlayerSpawner.cs" />
@@ -74,17 +75,20 @@
     <Compile Include="Assets\Scripts\Functionality Scripts\EditGameSettings.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
     <Compile Include="Assets\Scripts\Gameplay\SpawnpointController.cs" />
-    <Compile Include="Assets\Scripts\UI Scripts\Timer.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\CurseTimer.cs" />
     <Compile Include="Assets\Scripts\Gameplay\GameSettingsController.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Globals.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\PlayerNameInput.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\SettingsManager.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChannelSelector.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\NametagLookAt.cs" />
-    <Compile Include="Assets\Scripts\Functionality Scripts\RoomSettings.cs" />
-    <Compile Include="Assets\Scripts\Game\ArtifactControlScript.cs" />
+    <Compile Include="Assets\RoomSettings.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Artifact\ArtifactControlScript.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\RoomListEntry.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
+    <Compile Include="Assets\AssignRenderCamera.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Artifact\ArtifactTracer.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\WatchPlayer.cs" />
     <Compile Include="Assets\Scripts\Player Scripts\PlayerNameTag.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\FriendItem.cs" />
@@ -95,7 +99,9 @@
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Menu\FontColorChange.cs" />
     <Compile Include="Assets\Scripts\Functionality Scripts\MainMenu.cs" />
-    <Compile Include="Assets\Scripts\Functionality Scripts\TopPanel.cs" />
+    <Compile Include="Assets\Scripts\Functionality Scripts\ConnectionStatus.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\RoundTimer.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\Timer.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

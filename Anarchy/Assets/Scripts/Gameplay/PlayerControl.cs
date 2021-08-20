@@ -11,7 +11,6 @@ public class PlayerControl : MonoBehaviourPun
     Vector3 forward, right;
     float gravity = 0.0f;
     private bool isCursed = false;
-    private bool isInitial = true;
     private int ownerID;
     private Vector3 velocity = Vector3.zero;
     #endregion
@@ -19,6 +18,7 @@ public class PlayerControl : MonoBehaviourPun
     CharacterController controller;
     public static PlayerControl LocalPlayerInstance;
     public static GameObject LocalPlayerGameObject;
+    [SerializeField] private GameObject ParticleSystem;
     #endregion
     #region CameraParameters
     private Vector3 offset;
@@ -60,7 +60,7 @@ public class PlayerControl : MonoBehaviourPun
     {
         if (photonView.IsMine) { 
 
-            if (Input.anyKey)
+            if (Input.anyKey && !Globals.freezePlayer)
             {
                 Move();
             }
@@ -152,37 +152,33 @@ public class PlayerControl : MonoBehaviourPun
     public void SetSpeed()
     {
         moveSpeed = ((float)PhotonNetwork.CurrentRoom.CustomProperties["moveSpeed"] / 10 * moveSpeed);
-        Debug.Log(moveSpeed);
     }
 
     public void BecomeCursed(int playerNumber)
     {
-        if (isInitial)
+        if (PhotonNetwork.LocalPlayer.ActorNumber == playerNumber)
         {
-            isInitial = false;
-            if (PhotonNetwork.LocalPlayer == PhotonNetwork.PlayerList[playerNumber])
-            {
-                isCursed = true;
-                GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Red");
-            }
-            else
-            {
-                isCursed = false;
-                GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Blue");
-            }
+            isCursed = true;
         }
         else
         {
-            if (PhotonNetwork.LocalPlayer == PhotonNetwork.CurrentRoom.GetPlayer(playerNumber))
+            isCursed = false;
+        }
+
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject playerModel in players)
+        {
+            if (playerModel.GetComponent<PlayerControl>().GetPlayerID() == playerNumber)
             {
-                isCursed = true;
-                GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Red");
+                playerModel.transform.Find("CurseParticles").GetComponent<ParticleSystem>().Play();
             }
             else
             {
-                isCursed = false;
-                GetComponent<Renderer>().material = Resources.Load<Material>("Materials/Blue");
+                playerModel.transform.Find("CurseParticles").GetComponent<ParticleSystem>().Stop();
             }
         }
     }
 }
+
+

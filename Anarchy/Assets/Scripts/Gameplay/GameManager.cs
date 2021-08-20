@@ -14,20 +14,23 @@ public class GameManager : MonoBehaviour
     private int whichPlayerIsCursed;
 
     [SerializeField] private GameObject spawnpoints;
-    [SerializeField] private GameObject timer;
+    [SerializeField] private GameObject curseTimerObject;
 
-    // Start is called before the first frame update
+    private CurseTimer curseTimer;
+
     void Start()
     {
         ResetLocalPlayer();
 
         myPV = GetComponent<PhotonView>();
+        curseTimer = curseTimerObject.GetComponent<CurseTimer>();
 
         if (PhotonNetwork.IsMasterClient)
         {
             myPV.RPC("SetGameSettings", RpcTarget.AllBuffered);
             int initialCursed = UnityEngine.Random.Range(0, PhotonNetwork.CurrentRoom.PlayerCount);
-            PickCursed(initialCursed);
+            PickCursed(PhotonNetwork.PlayerList[initialCursed].ActorNumber);
+            curseTimer.SetTime("StartCurseTime");
         }
     }
 
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour
     {
         whichPlayerIsCursed = playerNumber;
         PlayerControl.LocalPlayerInstance.BecomeCursed(playerNumber);
+        curseTimer.SetTime("StartCurseTime");
     }
 
     [PunRPC]
@@ -57,8 +61,8 @@ public class GameManager : MonoBehaviour
 
     private void SetTimer()
     {
-        float time = (float)PhotonNetwork.CurrentRoom.CustomProperties["roundTime"];
-        timer.GetComponent<Timer>().SetTime(time);
+        // float time = (float)PhotonNetwork.CurrentRoom.CustomProperties["roundTime"];
+        // timer.GetComponent<Timer>().SetTime(time);
     }
 
     private void SetCurseTimer()

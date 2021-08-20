@@ -1,17 +1,16 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun.UtilityScripts;
-using System;
-using TMPro;
 
 public class MainMenu : MonoBehaviourPunCallbacks
 {
+    [Header("Top Panel")]
+    public GameObject Background;
+
     [Header("Top Panel")]
     public GameObject TopPanel;
 
@@ -86,7 +85,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected To Master");
         this.SetActivePanel(SelectionPanel.name);
     }
 
@@ -98,11 +96,11 @@ public class MainMenu : MonoBehaviourPunCallbacks
         UpdateRoomListView();
     }
 
-    public override void OnJoinedLobby()
+    /* public override void OnJoinedLobby()
     {
         cachedRoomList.Clear();
         ClearRoomListView();
-    }
+    } */
 
     public override void OnLeftLobby()
     {
@@ -130,9 +128,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         cachedRoomList.Clear();
-
-        Debug.Log("Client successfully joined a room");
-
+        StartGameButton.GetComponent<Button>().interactable = true;
+        Background.SetActive(false);
         TopPanel.SetActive(false);
         SetActivePanel(InsideRoomPanel.name);
         CharacterSelect.SetActive(true);
@@ -142,6 +139,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         TopPanel.SetActive(true);
         this.SetActivePanel(SelectionPanel.name);
+        Background.GetComponent<Image>().enabled = true;
     }
     #endregion
 
@@ -176,7 +174,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
         if (!string.IsNullOrWhiteSpace(playerName))
         {
-            Debug.Log(playerName);
             PhotonNetwork.LocalPlayer.NickName = playerName;
             PhotonNetwork.GameVersion = GameVersion;
             PhotonNetwork.ConnectUsingSettings();
@@ -249,6 +246,14 @@ public class MainMenu : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
+        {
+            StartGameButton.SetActive(true);
+        }
+    }
+
     #endregion
 
     #region HELPERS
@@ -307,7 +312,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
             GameObject entry = Instantiate(RoomListEntryPrefab);
             entry.transform.SetParent(RoomListContent.transform);
             entry.transform.localScale = Vector3.one;
-            entry.GetComponent<RoomListEntry>().Initialize(info.Name, (byte)info.PlayerCount, info.MaxPlayers);
+            entry.GetComponent<RoomListEntry>().Initialize((string)info.CustomProperties["owner"], info.Name, (byte)info.PlayerCount, info.MaxPlayers);
 
             roomListEntries.Add(info.Name, entry);
         }
@@ -315,19 +320,23 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     private void CreateRoom(string roomName)
     {
+        Background.GetComponent<Image>().enabled = false;
+
         string[] nicknames = new string[8] { "", "", "", "", "", "", "", "" };
         int[] models = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
 
         PhotonNetwork.CreateRoom(roomName, new RoomOptions
         {
             MaxPlayers = MaxPlayersPerRoom,
+            CustomRoomPropertiesForLobby = new string[1] { "owner" },
             CustomRoomProperties = new Hashtable
                 {
+                    { "owner", PhotonNetwork.LocalPlayer.NickName },
                     { "nicknames", nicknames },
                     { "models", models},
                     { "moveSpeed", 10f },
                     { "roundTime", 5f },
-                    { "curseTime", 1f},
+                    { "curseTime", 60.0f},
                     { "artifactsDR", "LOW"}
                 },
             PlayerTtl = 0,
