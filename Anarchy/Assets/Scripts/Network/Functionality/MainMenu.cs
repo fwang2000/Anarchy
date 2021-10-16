@@ -60,8 +60,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     private Dictionary<string, RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
-
-    // private PlayerSpawner spawner;
+    private Vector3 origCameraPosition = new Vector3(-40, 30, -40);
 
     #region UNITY
 
@@ -139,7 +138,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         TopPanel.SetActive(true);
         this.SetActivePanel(SelectionPanel.name);
-        Background.GetComponent<Image>().enabled = true;
+        Background.SetActive(true);
+        Camera.main.GetComponent<Transform>().position = origCameraPosition;
     }
     #endregion
 
@@ -320,8 +320,6 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     private void CreateRoom(string roomName)
     {
-        Background.GetComponent<Image>().enabled = false;
-
         string[] nicknames = new string[8] { "", "", "", "", "", "", "", "" };
         int[] models = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
 

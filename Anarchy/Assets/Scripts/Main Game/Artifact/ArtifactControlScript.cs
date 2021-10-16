@@ -24,7 +24,7 @@ public class ArtifactControlScript : MonoBehaviour
     private Color openBeaconColor = new Color(0, 252, 255);
     private Color activeBeaconColor = new Color(1, 0, 0.108f);
 
-    private bool artifactActivated = false;
+    private bool artifactUsed = false;
     private bool timerIsRunning = true;
     private float timeRemaining = 10.0f;
 
@@ -37,7 +37,7 @@ public class ArtifactControlScript : MonoBehaviour
 
     private void Update()
     {
-        if (artifactActivated)
+        if (artifactUsed)
         {
             StartArtifactTask();
         }
@@ -51,15 +51,16 @@ public class ArtifactControlScript : MonoBehaviour
         {
             float distance = Vector3.Distance(PlayerCapsule.transform.position, transform.position);
             
-            if (distance <= 5.0f && !artifactActivated)
+            if (distance <= 5.0f && !artifactUsed)
             {
                 ArtifactButtonObject.SetActive(true);
             }
             else if (distance > 5.0f)
             {
                 ArtifactButtonObject.SetActive(false);
-                if (artifactActivated)
+                if (artifactUsed)
                 {
+                    SetArtifactUsed(false);
                     SetArtifactTask(false);
                     SetArtifact(10.0f, true);
                 }
@@ -77,9 +78,13 @@ public class ArtifactControlScript : MonoBehaviour
         SetArtifactTask(true);
     }
 
+    private void SetArtifactUsed(bool isActive)
+    {
+        artifactUsed = isActive;
+    }
+
     private void SetArtifactTask(bool isActive)
     {
-        artifactActivated = isActive;
         ArtifactPanel.SetActive(isActive);
         ArtifactTracer.SetActive(isActive);
         Globals.freezePlayer = isActive;
@@ -96,6 +101,7 @@ public class ArtifactControlScript : MonoBehaviour
             }
             else
             {
+                SetArtifactUsed(true);
                 SetArtifact(0.0f, false);
                 ArtifactTracer.GetComponent<ArtifactTracer>().DestroyDrawPrefabs();
                 SetArtifactTask(false);

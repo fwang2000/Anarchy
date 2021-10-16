@@ -33,6 +33,9 @@ public class PlayerControl : MonoBehaviourPun
 
     private void Awake()
     {
+        PhotonNetwork.SendRate = 20;
+        PhotonNetwork.SerializationRate = 10;
+
         if (photonView.IsMine)
         {
             PlayerControl.LocalPlayerInstance = this;
@@ -79,6 +82,13 @@ public class PlayerControl : MonoBehaviourPun
                 offset = cameraTransform.position;
             }
         }
+        /*
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.deltaTime * moveSpeed);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.deltaTime * 100);
+        }
+        */
     }
 
     private void ApplyGravity()
@@ -97,7 +107,7 @@ public class PlayerControl : MonoBehaviourPun
 
     private void Move()
     {
-        Vector3 oldPosition = transform.position;
+        // Vector3 oldPosition = transform.position;
         Vector3 rightMovement = right * Input.GetAxis("HorizontalKey");
         Vector3 upMovement = forward * Input.GetAxis("VerticalKey");
 
@@ -106,7 +116,7 @@ public class PlayerControl : MonoBehaviourPun
         movement.Normalize();
 
         controller.Move(movement * moveSpeed * Time.deltaTime);
-        velocity = transform.position - oldPosition;
+        // velocity = transform.position - oldPosition;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -125,18 +135,6 @@ public class PlayerControl : MonoBehaviourPun
         else if (hit.gameObject.tag == "Environment")
         {
             Debug.Log("enviro test");
-        }
-    }
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(isCursed);
-        }
-        else
-        {
-            this.isCursed = (bool)stream.ReceiveNext();
         }
     }
 
@@ -194,6 +192,25 @@ public class PlayerControl : MonoBehaviourPun
     {
 
     }
+
+    /* public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext((Vector3)transform.position);
+            stream.SendNext((Quaternion)transform.rotation);
+            stream.SendNext((Vector3)velocity);
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkRotation = (Quaternion)stream.ReceiveNext();
+            velocity = (Vector3)stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            networkPosition += (this.velocity * lag);
+        }
+    } */
 }
 
 
